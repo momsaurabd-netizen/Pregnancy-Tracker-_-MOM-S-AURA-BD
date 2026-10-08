@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>প্রেগনেন্সি ট্রাকার | MOM'S AURA BD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Tiro+Bangla&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbeee8;--card:#fff8f4;--ink:#4a2e2a;--mute:#8a6a63;--rose:#b76e79;--copper:#b0703f;--line:#ecd0c6;--track:#f1d9d0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a1b1a;--card:#382625;--ink:#f6e3dc;--mute:#c9a79d;--rose:#e0a394;--copper:#e2b27f;--line:#553836;--track:#4a3130}}
+:root[data-theme="dark"]{--bg:#2a1b1a;--card:#382625;--ink:#f6e3dc;--mute:#c9a79d;--rose:#e0a394;--copper:#e2b27f;--line:#553836;--track:#4a3130}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;line-height:1.65}
+main{max-width:520px;margin:0 auto;padding:20px 16px 40px}
+h1,h2,.big{font-family:"Tiro Bangla","Noto Serif Bengali",serif;font-weight:400}
+header{text-align:center;padding:8px 0 16px}
+header h1{font-size:1.7rem;margin:0;color:var(--rose)}
+header p{margin:4px 0 0;color:var(--mute);font-size:.95rem}
+section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+h2{font-size:1.15rem;margin:0 0 8px}
+label{display:block;font-weight:500;margin-bottom:6px}
+.hint{color:var(--mute);font-size:.88rem;margin:6px 0 0}
+input[type=date]{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit}
+button{font:inherit;cursor:pointer;border-radius:12px;border:1px solid var(--rose);padding:11px 16px;background:var(--rose);color:#fff}
+button.ghost{background:transparent;color:var(--rose)}
+:focus-visible{outline:3px solid var(--copper);outline-offset:2px}
+.ring{position:relative;width:230px;height:230px;margin:6px auto 12px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .t{fill:none;stroke:var(--track);stroke-width:12}
+.ring .p{fill:none;stroke:var(--rose);stroke-width:12;stroke-linecap:round;stroke-dasharray:597;stroke-dashoffset:597;transition:stroke-dashoffset .9s ease}
+.mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.big{font-size:3.2rem;line-height:1.1;color:var(--ink)}
+.mid small{color:var(--mute)}
+.row{display:flex;gap:10px}
+.row>div{flex:1;border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.row b{display:block;font-size:1.02rem}
+.row span{color:var(--mute);font-size:.85rem}
+.size{font-size:1.1rem}
+.size b{color:var(--copper)}
+#tapBtn{width:100%;padding:16px;font-size:1.1rem;margin:10px 0}
+.kc{text-align:center}
+.kc .big{font-size:2.6rem}
+#err{color:#b3261e;margin:8px 0 0}
+.shop a{color:var(--copper);font-weight:600}
+footer{text-align:center;color:var(--mute);font-size:.8rem}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){.ring .p{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>আমার গর্ভকালীন সঙ্গী</h1>
+<p>সপ্তাহ ধরে ধরে আপনার ও আপনার শিশুর যাত্রা</p>
+</header>
+
+<section>
+<label for="lmp">শেষ মাসিক শুরুর তারিখ</label>
+<input type="date" id="lmp">
+<p class="hint">এই তারিখ থেকে আনুমানিক ডেলিভারির তারিখ ও বর্তমান সপ্তাহ হিসাব হবে।</p>
+<p id="err" hidden></p>
+</section>
+
+<div id="result" hidden>
+<section>
+<div class="ring">
+<svg viewBox="0 0 220 220" aria-hidden="true"><circle class="t" cx="110" cy="110" r="95"/><circle class="p" id="arc" cx="110" cy="110" r="95"/></svg>
+<div class="mid"><small>চলছে</small><span class="big" id="wk"></span><small id="wkd"></small></div>
+</div>
+<div class="row">
+<div><span>ট্রাইমেস্টার</span><b id="tri"></b></div>
+<div><span>আনুমানিক ডেলিভারি</span><b id="due"></b></div>
+</div>
+<p class="hint" id="left" style="text-align:center"></p>
+</section>
+
+<section>
+<h2>এই সপ্তাহে আপনার শিশু</h2>
+<p class="size">আকারে প্রায় একটি <b id="fruit"></b>র মতো।</p>
+<p id="note" style="margin:6px 0 0"></p>
+</section>
+
+<section>
+<h2>আজকের যত্নের টিপস</h2>
+<p id="tip" style="margin:0"></p>
+</section>
+
+<section class="kc">
+<h2>কিক কাউন্টার</h2>
+<p class="hint" style="margin:0">শিশুর নড়াচড়া টের পেলেই ট্যাপ করুন।</p>
+<button id="tapBtn" type="button">শিশু নড়েছে</button>
+<div class="big" id="kicks">০</div>
+<p class="hint" id="kinfo">আজ এখনো কিছু গোনা হয়নি।</p>
+<button class="ghost" id="reset" type="button">নতুন করে শুরু করুন</button>
+</section>
+</div>
+
+<section class="shop">
+<h2>মায়ের আরামের জন্য</h2>
+<p style="margin:0">গর্ভাবস্থায় ঘুম ও পিঠের আরামের জন্য প্রেগনেন্সি সাপোর্ট পিলো, আর ডেলিভারির পর নার্সিং ব্রা ও ইনার আইটেম — সব পাবেন <a href="https://momsaurabd.com/" target="_blank" rel="noopener">MOM'S AURA BD</a>-তে।</p>
+</section>
+
+<footer>এই অ্যাপের তথ্য সাধারণ ধারণার জন্য। নিয়মিত চেকআপ ও চিকিৎসকের পরামর্শের বিকল্প নয়।</footer>
+</main>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var bn=function(n){return String(n).replace(/\d/g,function(d){return '০১২৩৪৫৬৭৮৯'[d]})};
+var sizes=[[4,'তিলের দানা','ভ্রূণ জরায়ুতে বসে গেছে, শিশুর গঠন শুরু হচ্ছে।'],[6,'মটরদানা','ছোট্ট হৃৎপিণ্ড স্পন্দন শুরু করেছে।'],[8,'রাজমা বিচি','হাত-পায়ের আঙুলের আদল তৈরি হচ্ছে।'],[10,'স্ট্রবেরি','গুরুত্বপূর্ণ অঙ্গগুলো প্রায় গঠিত।'],[12,'পাতিলেবু','শিশু এখন নড়াচড়া করে, যদিও আপনি টের পান না।'],[14,'লেবু','মুখের অভিব্যক্তি তৈরি হচ্ছে, ঘুম-জাগার ছন্দ শুরু।'],[16,'অ্যাভোকাডো','শিশু শব্দ শুনতে শুরু করতে পারে।'],[18,'মিষ্টি আলু','অনেক মা এ সময় প্রথম নড়াচড়া টের পান।'],[20,'কলা','অর্ধেক পথ পার! শিশু ঘন ঘন হাত-পা ছোড়ে।'],[22,'ছোট পেঁপে','শিশুর স্পর্শের অনুভূতি বাড়ছে।'],[24,'ভুট্টা','ফুসফুস বিকশিত হচ্ছে, শব্দে সাড়া দেয়।'],[26,'শসা','চোখ খুলতে শুরু করে।'],[28,'বেগুন','শিশু ঘুমায়, স্বপ্ন দেখার মতো নড়াচড়াও করে।'],[30,'বাঁধাকপি','মস্তিষ্ক দ্রুত বাড়ছে।'],[32,'বড় শশা','শিশু মাথা নিচের দিকে ঘোরাতে শুরু করতে পারে।'],[34,'ক্যান্টালুপ','ফুসফুস প্রায় পূর্ণতা পাচ্ছে।'],[36,'পেঁপে','শিশু ডেলিভারির জন্য প্রস্তুত হচ্ছে।'],[38,'লিক','শিশু পূর্ণ গর্ভকালের কাছাকাছি।'],[40,'ছোট তরমুজ','যেকোনো দিন আপনার কোলে আসতে পারে!']];
+var tips={1:'প্রতিদিন ফলিক অ্যাসিড ও ডাক্তারের দেওয়া ভিটামিন নিয়মিত খান। বমি বমি ভাব কমাতে অল্প অল্প করে বারবার খান।',2:'এখন শরীর ভারী হতে শুরু করে। কাত হয়ে শোয়া ও পেট-পিঠের নিচে বালিশের সাপোর্ট আরামদায়ক ঘুমে সাহায্য করবে। প্রচুর পানি পান করুন।',3:'হাসপাতালের ব্যাগ গুছিয়ে রাখুন। হালকা হাঁটাহাঁটি করুন, বিশ্রাম নিন, আর শিশুর নড়াচড়া কমে গেলে দেরি না করে ডাক্তারকে জানান।'};
+var $in=$('lmp');
+try{var s=localStorage.getItem('lmp');if(s)$in.value=s}catch(e){}
+function render(){
+ var v=$in.value,err=$('err'),res=$('result');
+ if(!v){res.hidden=true;err.hidden=true;return}
+ var p=v.split('-'),lmp=new Date(+p[0],+p[1]-1,+p[2]),now=new Date();
+ now=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ var days=Math.round((now-lmp)/864e5);
+ if(days<0||days>294){res.hidden=true;err.hidden=false;err.textContent=days<0?'তারিখটি ভবিষ্যতের। শেষ মাসিকের সঠিক তারিখ দিন।':'এই তারিখ থেকে ৪২ সপ্তাহের বেশি হয়ে গেছে। তারিখটি আবার দেখে নিন।';return}
+ err.hidden=true;res.hidden=false;
+ try{localStorage.setItem('lmp',v)}catch(e){}
+ var w=Math.floor(days/7),d=days%7;
+ $('wk').textContent=bn(w)+' সপ্তাহ';
+ $('wkd').textContent=bn(d)+' দিন';
+ var tri=w<14?1:w<28?2:3;
+ $('tri').textContent=['প্রথম','দ্বিতীয়','তৃতীয়'][tri-1]+' ট্রাইমেস্টার';
+ var due=new Date(lmp.getTime()+280*864e5);
+ $('due').textContent=due.toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:'numeric'});
+ var left=280-days;
+ $('left').textContent=left>0?'আর প্রায় '+bn(left)+' দিন বাকি':'ডেলিভারির আনুমানিক সময় পার হয়েছে, ডাক্তারের সাথে যোগাযোগ রাখুন';
+ $('arc').style.strokeDashoffset=597*(1-Math.min(days/280,1));
+ var z=sizes[0];for(var i=0;i<sizes.length;i++){if(sizes[i][0]<=w)z=sizes[i]}
+ $('fruit').textContent=z[1];$('note').textContent=z[2];
+ $('tip').textContent=tips[tri];
+}
+$in.addEventListener('change',render);$in.addEventListener('input',render);
+var k=0;
+try{var sk=JSON.parse(localStorage.getItem('kick')||'null');if(sk&&sk.d===new Date().toDateString())k=sk.n}catch(e){}
+function showK(){$('kicks').textContent=bn(k);$('kinfo').textContent=k?(k>=10?'১০ বা তার বেশি নড়াচড়া গোনা হয়েছে।':'নড়াচড়া গোনা হচ্ছে — ১০টি পর্যন্ত গুনুন।'):'আজ এখনো কিছু গোনা হয়নি।'}
+function saveK(){try{localStorage.setItem('kick',JSON.stringify({d:new Date().toDateString(),n:k}))}catch(e){}}
+$('tapBtn').addEventListener('click',function(){k++;saveK();showK()});
+$('reset').addEventListener('click',function(){k=0;saveK();showK()});
+showK();render();
+})();
+</script>
+</body>
+</html>
